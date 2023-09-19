@@ -32,7 +32,11 @@ async def async_setup(hass, entry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     async def update_device(device):
-        entry = async_get_config_entry_for_device(hass, device["gwId"])
+        current_entries = hass.config_entries.async_entries(DOMAIN)
+        if len(current_entries) == 0:
+            return
+        else:
+            entry = current_entries[0]
 
         if entry == None:
             return
@@ -84,11 +88,3 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def update_listener(hass, entry):
     """Handle options update."""
     hass.config_entries.async_reload(entry.entry_id)
-
-
-def async_get_config_entry_for_device(hass, device_id):
-    current_entries = hass.config_entries.async_entries(DOMAIN)
-    for entry in current_entries:
-        if device_id in entry.data[CONF_VACS]:
-            return entry
-    return None
