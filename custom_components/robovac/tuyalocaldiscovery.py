@@ -50,6 +50,6 @@ class TuyaLocalDiscovery(asyncio.DatagramProtocol):
             loop = None
         
         if loop and loop.is_running():
-            tsk = loop.create_task(self.discovered_callback(decoded))
+            self.discovered_callback(decoded)
         else:
             asyncio.run(self.discovered_callback(decoded))
