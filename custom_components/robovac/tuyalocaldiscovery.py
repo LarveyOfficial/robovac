@@ -48,7 +48,8 @@ class TuyaLocalDiscovery(asyncio.DatagramProtocol):
             loop = asyncio.get_running_loop()
         except RuntimeError:
             loop = None
-        if loop is not None:
-            asyncio.run_coroutine_threadsafe(self.discovered_callback(decoded), loop)
+        
+        if loop and loop.is_running():
+            self.discovered_callback(decoded)
         else:
             asyncio.run(self.discovered_callback(decoded))
