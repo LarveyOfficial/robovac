@@ -44,4 +44,4 @@ class TuyaLocalDiscovery(asyncio.DatagramProtocol):
             data = data.decode()
 
         decoded = json.loads(data)
-        await self.discovered_callback(decoded)
+        self.discovered_callback(decoded)
