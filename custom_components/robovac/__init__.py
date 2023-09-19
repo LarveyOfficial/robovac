@@ -56,7 +56,7 @@ async def async_setup(hass, entry) -> bool:
                     )
                 )
 
-    tuyalocaldiscovery = await TuyaLocalDiscovery(update_device)
+    tuyalocaldiscovery = TuyaLocalDiscovery(update_device)
     try:
         await tuyalocaldiscovery.start()
         hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, tuyalocaldiscovery.close)
