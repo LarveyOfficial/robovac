@@ -42,14 +42,3 @@ class TuyaLocalDiscovery(asyncio.DatagramProtocol):
 
         except Exception:
             data = data.decode()
-
-        decoded = json.loads(data)
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = None
-        
-        if loop and loop.is_running():
-            self.discovered_callback(decoded)
-        else:
-            asyncio.run(self.discovered_callback(decoded))
