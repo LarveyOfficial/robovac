@@ -43,5 +43,5 @@ class TuyaLocalDiscovery(asyncio.DatagramProtocol):
         except Exception:
             data = data.decode()
 
-        asyncio.ensure_future(self.discovered_callback(decoded))
+        decoded = json.loads(data)
         self.discovered_callback(decoded)
